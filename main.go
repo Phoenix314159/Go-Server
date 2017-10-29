@@ -1,13 +1,13 @@
 package main
 
-import (
-	"log"
-	"net/http"
-)
+import "os"
 
 func main() {
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/", fs)
-	log.Println("Hello World!!!")
-	http.ListenAndServe(":3525", nil)
+	a := App{}
+	a.Initialize(
+		os.Getenv("DB_USERNAME"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"))
+
+	a.Run(":8080")
 }
